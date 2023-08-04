@@ -1,16 +1,21 @@
-export const App = () => {
+import { SearchBar } from './SearchBar/SearchBar';
+import styles from './App.module.css';
+import { Component } from 'react';
+import  { getImages } from '../api/api.services'
+
+export class App extends Component  {
+  handleSubmit = value => {
+    getImages(value)
+  };
+
+
+
+render(){
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div className={styles.App}>
+      <SearchBar onSubmit={this.handleSubmit}/>
     </div>
   );
+}
 };
+
