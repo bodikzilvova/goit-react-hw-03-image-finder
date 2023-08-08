@@ -16,36 +16,35 @@ export class App extends Component {
     isLoading: false,
     isShown: false,
     largeImage: '',
-    searchValue: '',
   };
 
   handleSubmit = value => {
     this.setState({ isLoading: true });
     getImages(value).then(images => {
-      console.log(images)
       this.setState({
         images: images,
         page: 1,
         isLoading: false,
-        searchValue: value,
+        value: value,
       });
     });
   };
 
   handleLoadMore = () => {
-    const { searchValue, page, } = this.state;
+    const { value, page } = this.state;
     this.setState({ isLoading: true });
-    getImages(searchValue, page + 1).then(newImages  => {
-      this.setState(prevState => ({
-        images: [...prevState.images, ...newImages],
-        page: prevState.page + 1,
-        isLoading: false,
-      }))
+    getImages(value, page + 1)
+      .then(newImages => {
+        this.setState(prevState => ({
+          images: [...prevState.images, ...newImages],
+          page: prevState.page + 1,
+          isLoading: false,
+        }));
+      })
       .catch(error => {
         console.error('Error fetching images:', error);
         this.setState({ isLoading: false });
       });
-    });
   };
 
   handleOpenModal = largeImage => {
@@ -63,7 +62,7 @@ export class App extends Component {
       <div className={styles.App}>
         <SearchBar onSubmit={this.handleSubmit} />
         <ImageGallery images={images} onOpenModal={this.handleOpenModal} />
-         {images.length >= per_page * page && (
+        {images.length >= per_page * page && (
           <Button handleLoadMore={this.handleLoadMore} />
         )}
         {isLoading && <Audio />}
