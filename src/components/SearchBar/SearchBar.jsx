@@ -16,7 +16,6 @@ export class SearchBar extends Component {
 e.preventDefault();
 const { value } = this.state;
 this.props.onSubmit(value)
-
   };
 
   render() {
