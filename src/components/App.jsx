@@ -4,8 +4,8 @@ import { Component } from 'react';
 import { getImages } from '../api/api.services';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
-import { Audio } from 'react-loader-spinner';
 import { Modal } from './Modal/Modal';
+import { Audio } from 'react-loader-spinner';
 
 export class App extends Component {
   state = {
