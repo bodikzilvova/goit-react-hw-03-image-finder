@@ -17,5 +17,5 @@ export class Button extends Component {
 }
 
 Button.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  handleLoadMore: PropTypes.func.isRequired,
 };

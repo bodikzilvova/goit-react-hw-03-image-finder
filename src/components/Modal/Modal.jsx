@@ -17,10 +17,16 @@ export class Modal extends Component {
     }
   };
 
+  handleCloseClick = e => {
+    if (e.target === e.currentTarget) {
+      this.props.onCloseModal();
+    }
+  };
+
   render() {
-    const { image, onCloseModal } = this.props;
+    const { image } = this.props;
     return (
-      <div className={styles.Overlay} onClick={onCloseModal}>
+      <div className={styles.Overlay} onClick={this.handleCloseClick}>
         <div className={styles.Modal}>
           <img src={image} alt="ModalImage" />
         </div>

@@ -18,33 +18,28 @@ export class App extends Component {
     largeImage: '',
   };
 
-  handleSubmit = value => {
-    this.setState({ isLoading: true });
-    getImages(value).then(images => {
-      this.setState({
-        images: images,
-        page: 1,
-        isLoading: false,
-        value: value,
+  componentDidUpdate(_, prevState) {
+    if (
+      prevState.value !== this.state.value ||
+      prevState.page !== this.state.page
+    ) {
+      const { value, page } = this.state;
+      this.setState({ isLoading: true });
+      getImages(value, page).then(({ hits }) => {
+        this.setState(prevState => ({
+          images: [...prevState.images, ...hits],
+          isLoading: false,
+        }));
       });
-    });
+    }
+  }
+
+  handleSubmit = value => {
+    this.setState({ value: value, page: 1, images: [] });
   };
 
   handleLoadMore = () => {
-    const { value, page } = this.state;
-    this.setState({ isLoading: true });
-    getImages(value, page + 1)
-      .then(newImages => {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...newImages],
-          page: prevState.page + 1,
-          isLoading: false,
-        }));
-      })
-      .catch(error => {
-        console.error('Error fetching images:', error);
-        this.setState({ isLoading: false });
-      });
+    this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   handleOpenModal = largeImage => {
