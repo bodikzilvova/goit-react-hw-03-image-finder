@@ -25,12 +25,15 @@ export class App extends Component {
     ) {
       const { value, page } = this.state;
       this.setState({ isLoading: true });
-      getImages(value, page).then(({ hits }) => {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...hits],
-          isLoading: false,
-        }));
-      });
+      getImages(value, page)
+        .then(({ hits }) => {
+          this.setState(prevState => ({
+            images: [...prevState.images, ...hits],
+          }));
+        })
+        .finally(() => {
+          this.setState({ isLoading: false });
+        });
     }
   }
 
